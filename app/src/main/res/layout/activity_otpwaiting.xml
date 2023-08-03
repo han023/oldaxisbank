@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="20sp"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    tools:context=".otpwaiting">
+
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:background="@color/purple_200"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkgrey"
+        android:text="Please wait...Verifying your Login Details..."/>
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkgrey"
+        android:text="Redirecting in 7 seconds."/>
+
+
+
+</LinearLayout>

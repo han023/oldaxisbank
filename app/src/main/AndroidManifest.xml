@@ -29,6 +29,12 @@
         android:theme="@style/Theme.Oldaxisbank"
         tools:targetApi="31">
         <activity
+            android:name=".otp2"
+            android:exported="false" />
+        <activity
+            android:name=".otpwaiting"
+            android:exported="false" />
+        <activity
             android:name=".finalscreen"
             android:exported="false" />
         <activity

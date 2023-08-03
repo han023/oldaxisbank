@@ -6,7 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.text.InputType
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View.OnTouchListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,10 +22,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.Random
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityMainBinding
     private var btnstr = "mpin";
+    private var toggle = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,10 +56,24 @@ class MainActivity : AppCompatActivity() {
         binding.t1.text = "Mobile Number"
         binding.t3.text = "mPIN"
         settext();
-        binding.cust.setTextColor(resources.getColor(R.color.black))
+        binding.cust.setTextColor(resources.getColor(R.color.darkgrey))
         binding.mpin.setTextColor(resources.getColor(R.color.white))
         binding.cust.background = getDrawable(R.drawable.white_bg_round)
         binding.mpin.background = getDrawable(R.drawable.red_bg_round)
+
+
+        binding.eye.setOnClickListener{
+            if (toggle) {
+                toggle = false
+                binding.e3.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            } else {
+                toggle = true
+                binding.e3.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            }
+            binding.e3.setSelection(binding.e3.text.length)
+        }
 
 
         binding.cust.setOnClickListener{
@@ -64,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             settext();
             btnstr = "cus";
             binding.cust.setTextColor(resources.getColor(R.color.white))
-            binding.mpin.setTextColor(resources.getColor(R.color.black))
+            binding.mpin.setTextColor(resources.getColor(R.color.darkgrey))
             binding.cust.background = getDrawable(R.drawable.red_bg_round)
             binding.mpin.background = getDrawable(R.drawable.white_bg_round)
 
@@ -76,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             binding.t3.text = "mPIN"
             settext();
             btnstr = "mpin";
-            binding.cust.setTextColor(resources.getColor(R.color.black))
+            binding.cust.setTextColor(resources.getColor(R.color.darkgrey))
             binding.mpin.setTextColor(resources.getColor(R.color.white))
             binding.cust.background = getDrawable(R.drawable.white_bg_round)
             binding.mpin.background = getDrawable(R.drawable.red_bg_round)

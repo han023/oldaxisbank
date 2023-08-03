@@ -20,7 +20,7 @@
      <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
+        android:layout_height="100sp"
         android:layout_gravity="start"
         android:foregroundGravity="top"
         android:src="@drawable/logo_axis_bank"
@@ -29,8 +29,8 @@
     <ImageView
         android:id="@+id/imageViewCongrat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="13sp"
+        android:layout_height="300sp"
+        android:layout_marginBottom="43sp"
         android:layout_gravity="start"
         android:foregroundGravity="top"
         android:src="@drawable/dd"

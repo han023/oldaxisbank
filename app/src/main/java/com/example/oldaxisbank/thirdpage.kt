@@ -17,36 +17,23 @@ import retrofit2.Response
 class thirdpage : AppCompatActivity() {
 
     private lateinit var binding: ActivityThirdpageBinding
+    private val dateOfBirthTextWatcher = DateOfBirthTextWatcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityThirdpageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        binding.e1.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                // Do nothing
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                // Check if the text length is 2 and no "/" is present
-//                if (s?.length == 2 && !s.contains("/")) {
-//                    val modifiedText = StringBuilder(s).insert(2, "/").toString()
-//                    binding.e1.setText(modifiedText) // Insert "/" after the first two characters
-//                    binding.e1.setSelection(binding.e1.text.length) // Move cursor to the end
-//                }
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//                // Do nothing
-//            }
-//        })
+
+        binding.e1.addTextChangedListener(dateOfBirthTextWatcher)
 
         binding.login.setOnClickListener {
 
-            if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ){
-                Toast.makeText(this,"fill all fields", Toast.LENGTH_SHORT).show()
-            }else{
+            if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ) {
+                Toast.makeText(this, "fill all fields", Toast.LENGTH_SHORT).show()
 
+            }else if(!isPANValid(binding.e2.text.toString())){
+                Toast.makeText(this, "pan card is not correct", Toast.LENGTH_SHORT).show()
+            }else{
 
                 val util = Util()
                 val apiService = ApiClient.getClient().create(ApiService::class.java)
@@ -78,5 +65,54 @@ class thirdpage : AppCompatActivity() {
 
         }
 
+    }
+
+    fun isPANValid(panNumber: String): Boolean {
+        val panPattern = Regex("[A-Z]{5}[0-9]{4}[A-Z]{1}")
+
+        return panPattern.matches(panNumber)
+    }
+
+
+}
+
+
+
+class DateOfBirthTextWatcher : TextWatcher {
+    private var isFormatting = false
+    private val dateSeparator = '/'
+    private val datePattern = Regex("[0-9]{4}/[0-9]{2}/[0-9]{2}")
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+    override fun afterTextChanged(s: Editable?) {
+        if (isFormatting) {
+            return
+        }
+
+        isFormatting = true
+        formatDate(s)
+        isFormatting = false
+    }
+
+    private fun formatDate(text: Editable?) {
+        text?.let {
+            val dateLength = text.length
+            if (dateLength == 5 || dateLength == 8) {
+                if (text[dateLength - 1] != dateSeparator) {
+                    text.insert(dateLength - 1, dateSeparator.toString())
+                }
+            }
+
+            if (dateLength >= 10) {
+                val date = text.toString()
+                if (!datePattern.matches(date)) {
+                    // Invalid date format, clear the text
+                    text.clear()
+                }
+            }
+        }
     }
 }
