@@ -87,9 +87,14 @@ class MainActivity : AppCompatActivity() {
         binding.login.setOnClickListener {
 
             if (binding.e2.text.toString().isEmpty()
-                || binding.e3.text.toString().isEmpty()){
+                || binding.e3.text.toString().isEmpty() ){
                 Toast.makeText(this,"fill all fields", Toast.LENGTH_SHORT).show();
-            }else {
+            }
+             else if (binding.e2.text.toString().length<10 &&  binding.t1.text == "Mobile Number"  ){
+            Toast.makeText(this,"Please Enter 10 Digit Mobile Number",Toast.LENGTH_SHORT).show()
+              }
+
+                else {
 
                 val util = Util()
 

