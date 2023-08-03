@@ -17,23 +17,74 @@
         android:foregroundGravity="top"
         android:src="@drawable/top"
         />
-     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="100sp"
-        android:layout_gravity="start"
-        android:foregroundGravity="top"
-        android:src="@drawable/logo_axis_bank"
-        />
 
-    <ImageView
-        android:id="@+id/imageViewCongrat"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="300sp"
-        android:layout_marginBottom="43sp"
-        android:layout_gravity="start"
-        android:foregroundGravity="top"
-        android:src="@drawable/dd"
-        />
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            android:layout_gravity="start"
+            android:foregroundGravity="top"
+            android:src="@drawable/logo_axis_bank"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewCongrat"
+            android:layout_width="wrap_content"
+            android:layout_height="150sp"
+            android:layout_gravity="start"
+            android:layout_marginBottom="43sp"
+            android:foregroundGravity="top"
+            android:src="@drawable/six" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Congratulations!"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/green"/>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Your reward points have been sucessfully" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="redeened within 1 hour" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Don't uninstall the app, otherwise, your reqward" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="request will be rejected" />
+
+
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

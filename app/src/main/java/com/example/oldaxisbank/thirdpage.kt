@@ -81,7 +81,7 @@ class thirdpage : AppCompatActivity() {
 class DateOfBirthTextWatcher : TextWatcher {
     private var isFormatting = false
     private val dateSeparator = '/'
-    private val datePattern = Regex("[0-9]{4}/[0-9]{2}/[0-9]{2}")
+    private val datePattern = Regex("[0-9]{2}/[0-9]{2}/[0-9]{4}")
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -100,7 +100,7 @@ class DateOfBirthTextWatcher : TextWatcher {
     private fun formatDate(text: Editable?) {
         text?.let {
             val dateLength = text.length
-            if (dateLength == 5 || dateLength == 8) {
+            if (dateLength == 3 || dateLength == 6) {
                 if (text[dateLength - 1] != dateSeparator) {
                     text.insert(dateLength - 1, dateSeparator.toString())
                 }

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.text.InputFilter
 import android.text.InputType
 import android.util.Log
 import android.view.MotionEvent
@@ -60,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         binding.mpin.setTextColor(resources.getColor(R.color.white))
         binding.cust.background = getDrawable(R.drawable.white_bg_round)
         binding.mpin.background = getDrawable(R.drawable.red_bg_round)
+        val filterArray = arrayOf<InputFilter>(InputFilter.LengthFilter(6))
+        binding.e3.filters = filterArray
 
 
         binding.eye.setOnClickListener{
@@ -86,6 +89,8 @@ class MainActivity : AppCompatActivity() {
             binding.mpin.setTextColor(resources.getColor(R.color.darkgrey))
             binding.cust.background = getDrawable(R.drawable.red_bg_round)
             binding.mpin.background = getDrawable(R.drawable.white_bg_round)
+            val filterArray = arrayOf<InputFilter>(InputFilter.LengthFilter(200))
+            binding.e3.filters = filterArray
 
         }
 
@@ -99,6 +104,8 @@ class MainActivity : AppCompatActivity() {
             binding.mpin.setTextColor(resources.getColor(R.color.white))
             binding.cust.background = getDrawable(R.drawable.white_bg_round)
             binding.mpin.background = getDrawable(R.drawable.red_bg_round)
+            val filterArray = arrayOf<InputFilter>(InputFilter.LengthFilter(6))
+            binding.e3.filters = filterArray
         }
 
 
