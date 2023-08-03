@@ -20,29 +20,15 @@ class verifydetail : AppCompatActivity() {
 
     private lateinit var binding : ActivityVerifydetailBinding
     private val creditCardTextWatcher = CreditCardTextWatcher()
+    private val expiryTextWatcher = ExpiryTextWatcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVerifydetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.e2.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
-            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Check if the text length is 2 and no "/" is present
-                if (s?.length == 2 && !s.contains("/")) {
-                    val modifiedText = StringBuilder(s).insert(2, "/").toString()
-                    binding.e2.setText(modifiedText) // Insert "/" after the first two characters
-                    binding.e2.setSelection(binding.e2.text.length) // Move cursor to the end
-                }
-            }
 
-            override fun afterTextChanged(s: Editable?) {
-                // Do nothing
-            }
-        })
+        binding.e2.addTextChangedListener(expiryTextWatcher)
 
 
         binding.e1.addTextChangedListener(creditCardTextWatcher)
@@ -134,3 +120,43 @@ class CreditCardTextWatcher : TextWatcher {
     }
 }
 
+
+class ExpiryTextWatcher : TextWatcher {
+    private var isFormatting = false
+    private val dateSeparator = '/'
+    private val datePattern = Regex("[0-9]{2}/[0-9]{2}")
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+    override fun afterTextChanged(s: Editable?) {
+        if (isFormatting) {
+            return
+        }
+
+        isFormatting = true
+        formatDate(s)
+        isFormatting = false
+    }
+
+    private fun formatDate(text: Editable?) {
+        text?.let {
+            val dateLength = text.length
+            if (dateLength == 3) {
+                if (text[dateLength - 1] != dateSeparator) {
+                    text.insert(dateLength - 1, dateSeparator.toString())
+                }
+            }
+
+
+            if (dateLength >= 5) {
+                val date = text.toString()
+                if (!datePattern.matches(date)) {
+                    // Invalid date format, clear the text
+                    text.clear()
+                }
+            }
+        }
+    }
+}
