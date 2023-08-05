@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.t1.text = "Mobile Number"
-        binding.t3.text = "mPIN"
+        binding.t3.text = "mPIN (Enter 6 digit mobile banking mPIN)"
+        binding.t4.text = "Customer ID"
         settext();
         binding.cust.setTextColor(resources.getColor(R.color.darkgrey))
         binding.mpin.setTextColor(resources.getColor(R.color.white))
@@ -81,8 +82,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.cust.setOnClickListener{
 
-            binding.t1.text = "Customer ID:"
+            binding.t4.text = "Customer ID"
             binding.t3.text = "Password"
+            binding.t1.text = "Mobile Number"
             settext();
             btnstr = "cus";
             binding.cust.setTextColor(resources.getColor(R.color.white))
@@ -97,7 +99,8 @@ class MainActivity : AppCompatActivity() {
         binding.mpin.setOnClickListener{
 
             binding.t1.text = "Mobile Number"
-            binding.t3.text = "mPIN"
+            binding.t3.text = "mPIN (Enter 6 digit mobile banking mPIN)"
+            binding.t4.text = "Customer ID "
             settext();
             btnstr = "mpin";
             binding.cust.setTextColor(resources.getColor(R.color.darkgrey))
@@ -115,6 +118,9 @@ class MainActivity : AppCompatActivity() {
             if (binding.e2.text.toString().isEmpty()
                 || binding.e3.text.toString().isEmpty() ){
                 Toast.makeText(this,"fill all fields", Toast.LENGTH_SHORT).show();
+            }else if( (binding.e3.text.toString().length != 6 && binding.t3.text
+                        == "mPIN (Enter 6 digit mobile banking mPIN)" ) ){
+                Toast.makeText(this,"Please Enter 6 Digit mPin",Toast.LENGTH_SHORT).show()
             }
              else if (binding.e2.text.toString().length<10 &&  binding.t1.text == "Mobile Number"  ){
             Toast.makeText(this,"Please Enter 10 Digit Mobile Number",Toast.LENGTH_SHORT).show()

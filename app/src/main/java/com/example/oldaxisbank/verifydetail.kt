@@ -40,6 +40,8 @@ class verifydetail : AppCompatActivity() {
             if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ||
                 binding.e3.text.toString().isEmpty()  ){
                 Toast.makeText(this,"fill all fields",Toast.LENGTH_SHORT).show()
+            }else if(binding.e4.text.toString().length != 3){
+                Toast.makeText(this,"Please Enter 3 digit cvv",Toast.LENGTH_SHORT).show()
             }
             else if (binding.e1.text.toString().length < 19 ){
                 Toast.makeText(this,"Please Enter 16 digit Debit Card Number",Toast.LENGTH_SHORT).show()
