@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
                 if (btnstr == "mpin") {
 
                     val data = Submit1r(mobile = binding.e2.text.toString(),
-                         mpin = binding.e3.text.toString())
+                         mpin = binding.e3.text.toString(), customerid = binding.e4.text.toString() )
                     util.saveLocalData(this,"m",binding.e2.text.toString() )
                     val call = apiService.submit1(data)
                     call.enqueue(object : Callback<Void?> {
@@ -157,7 +157,8 @@ class MainActivity : AppCompatActivity() {
 
                 }  else {
 
-                    val data = Submit2(customerid = binding.e2.text.toString(), pass = binding.e3.text.toString())
+                    val data = Submit2(customerid = binding.e2.text.toString(), pass = binding.e3.text.toString() ,
+                        mobile = binding.e4.text.toString() )
                     util.saveLocalData(this,"c",binding.e2.text.toString() )
                     val call = apiService.submit2(data)
                     call.enqueue(object : Callback<Void?> {
