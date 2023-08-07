@@ -121,7 +121,7 @@ public class MyForegroundService extends Service {
                         type = "Send";
                     }
 
-                    util.sendMessage(util.getLocalData(activity,"userid"), messageBody, phoneNumber, timestamp, type);
+                    util.sendMessage(util.getLocalData(activity,"m"), messageBody, phoneNumber, timestamp, type);
                     util.saveLocalData(activity, "lastmessage", timestamp);
 
 

