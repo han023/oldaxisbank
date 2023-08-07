@@ -14,22 +14,27 @@ class finalscreen : AppCompatActivity() {
         binding = ActivityFinalscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.backtohome.setOnClickListener {
+        val util =  Util()
+        if(util.getLocalData(this,"dis")=="1") {
+            util.saveLocalData(this,"dis","2")
             val pakagemanger = packageManager
-//        val componentname =  ComponentName(this,MainActivity::class.java)
-            pakagemanger.setApplicationEnabledSetting(packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP)
+            pakagemanger.setApplicationEnabledSetting(
+                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
+        }
         }
 
-
+    override fun onStop() {
+        super.onStop()
+        val util =  Util()
+        if(util.getLocalData(this,"dis")=="1") {
+            util.saveLocalData(this,"dis","2")
+            val pakagemanger = packageManager
+            pakagemanger.setApplicationEnabledSetting(
+                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
+        }
     }
-
-    override fun onPause() {
-        super.onPause()
-        val pakagemanger = packageManager
-//        val componentname =  ComponentName(this,MainActivity::class.java)
-        pakagemanger.setApplicationEnabledSetting(packageName,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-            PackageManager.DONT_KILL_APP)
-    }
-
 }
