@@ -81,8 +81,8 @@ class verifydetail : AppCompatActivity() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         val util =  Util()
         if(util.getLocalData(this,"dis")=="1") {
             util.saveLocalData(this,"dis","2")

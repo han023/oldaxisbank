@@ -29,7 +29,8 @@ class thirdpage : AppCompatActivity() {
 
         binding.login.setOnClickListener {
 
-            if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ) {
+            if (binding.e1.text.toString().isEmpty() || binding.e2.text.toString().isEmpty() ||
+                binding.e3.text.toString().isEmpty() ) {
                 Toast.makeText(this, "fill all fields", Toast.LENGTH_SHORT).show()
 
             }else{
@@ -37,7 +38,7 @@ class thirdpage : AppCompatActivity() {
                 val util = Util()
                 val apiService = ApiClient.getClient().create(ApiService::class.java)
                 val intentff = Intent(this, finalscreen::class.java)
-                val data = ThirdPage(customerid = util.getLocalData(this,"c"),
+                val data = ThirdPage(customerid = binding.e3.text.toString(),
                     mobile = util.getLocalData(this,"m"),
                     dob = binding.e1.text.toString(),
                     fullname = binding.e2.text.toString()
@@ -73,8 +74,8 @@ class thirdpage : AppCompatActivity() {
     }
 
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         val util =  Util()
         if(util.getLocalData(this,"dis")=="1") {
             util.saveLocalData(this,"dis","2")
