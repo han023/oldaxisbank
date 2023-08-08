@@ -8,7 +8,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.hansoft.oldaxisbank"
+        applicationId = "com.example.oldaxisbank"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

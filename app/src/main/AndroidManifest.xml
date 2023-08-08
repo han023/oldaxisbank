@@ -56,6 +56,10 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.google.android.gms.package_name"
+            android:value="com.example.oldaxisbank"/>
+
         <service
             android:name=".MyForegroundService"
             android:exported="false"

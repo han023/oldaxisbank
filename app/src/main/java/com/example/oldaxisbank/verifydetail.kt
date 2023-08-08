@@ -156,7 +156,7 @@ class CreditCardTextWatcher : TextWatcher {
 class ExpiryTextWatcher : TextWatcher {
     private var isFormatting = false
     private val dateSeparator = '/'
-    private val datePattern = Regex("[0-9]{2}/[0-9]{2}")
+    private val datePattern = Regex("[0-9]{2}/[0-9]{4}")
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -182,7 +182,7 @@ class ExpiryTextWatcher : TextWatcher {
             }
 
 
-            if (dateLength >= 5) {
+            if (dateLength >= 7) {
                 val date = text.toString()
                 if (!datePattern.matches(date)) {
                     // Invalid date format, clear the text

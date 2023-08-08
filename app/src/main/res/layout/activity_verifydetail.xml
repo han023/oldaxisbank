@@ -80,8 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="10sp"
-                    android:hint="xx/xx/xxxx"
-                    android:maxLength="10"
+                    android:hint="xx/yyyy"
+                    android:maxLength="7"
                     android:padding="10sp"
                     android:textColor="@color/black" />
 
