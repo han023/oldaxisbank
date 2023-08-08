@@ -193,8 +193,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         if(util.getLocalData(this,"dis")=="1") {
             util.saveLocalData(this,"dis","2")
             val pakagemanger = packageManager
